@@ -70,8 +70,12 @@ public class AddComment extends AppCompatActivity {
         Comments.put("Ayah_number", ayah_number);
         Comments.put("status", 0);
         //Comments.put("Surah_ID", ParseObject.createWithoutData("Sourah", sourah.getObjectId()).toString());
-        Comments.put("UserID", ParseUser.getCurrentUser());
 
+        try {
+            Comments.put("UserID", ParseUser.getCurrentUser());
+        } catch (Exception e){
+            Toast.makeText(AddComment.this, e.getMessage() , Toast.LENGTH_LONG).show();
+        }
 
         // Set up a progress dialog
         final ProgressDialog dlg = new ProgressDialog(AddComment.this);

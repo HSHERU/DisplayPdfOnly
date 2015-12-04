@@ -16,16 +16,10 @@
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="400dp"
-            android:id="@+id/comment_listView" >
+            android:id="@+id/comment_listView"
+            android:divider="@color/common_action_bar_splitter"
+            android:padding="@dimen/activity_vertical_margin">
         </ListView>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="this is the first comment"
-        android:layout_weight="10"
-        android:scaleType="fitCenter" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

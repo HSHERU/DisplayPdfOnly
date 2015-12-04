@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,15 +14,16 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tadabbur_page extends AppCompatActivity implements View.OnClickListener {
+
 
     Button Login_button;
     Button add_comment_button;
@@ -33,49 +32,54 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    //ao we can get the username that wrote the comment
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tadabbur_page);
-        /**
-         * not now
-         Button resetButton = (Button) findViewById(R.id.login_tadabbur_page);
-         resetButton.setVisibility(View.INVISIBLE);
-         */
 
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
-
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
         query.whereEqualTo("status", 1);
+        query.include("UserID");
         query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> commentList, com.parse.ParseException e) {
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
                 if (e == null) {
-                    Log.d("comment", "Retrieved " + commentList.size() + " comments");
-                    List<String> comments_list = new ArrayList<String>();
-                    for (int i = 0 ; i < commentList.size() ; i++) {
-                        comments_list.add(commentList.get(i).get("Comment").toString());
+                    List<comment_object> comments_list = new ArrayList<comment_object>();
+                    for (int i = 0; i < list.size(); i++) {
+                        /**
+                         * String username_objectId = (String) list.get(i).get("UserID");
+                        try {
+                            username = query.get(username_objectId).get("username").toString();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                         */
+                        comments_list.add(new comment_object(
+                                list.get(i).get("Comment").toString(),
+                                list.get(i).getObjectId(),
+                                list.get(i).getCreatedAt().toString(),
+                                list.get(i).getParseObject("UserID").get("username").toString()));
                     }
                     ListView lv = (ListView) findViewById(R.id.comment_listView);
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Tadabbur_page.this, android.R.layout.simple_list_item_1, comments_list);
-                    lv.setAdapter(arrayAdapter);
+                    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Tadabbur_page.this, android.R.layout.simple_list_item_1, comments_list);
+                    comment_array_adapter array_adapter = new comment_array_adapter(Tadabbur_page.this,comments_list);
+                    lv.setAdapter(array_adapter);
+
 
 
                 } else {
-                    Toast.makeText(Tadabbur_page.this , e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Tadabbur_page.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
 
 
-        Login_button = (Button)
-
-                findViewById(R.id.login_tadabbur_page);
+        Login_button = (Button) findViewById(R.id.login_tadabbur_page);
 
         Login_button.setOnClickListener(this);
-        add_comment_button = (Button)
-
-                findViewById(R.id.add_comment);
+        add_comment_button = (Button) findViewById(R.id.add_comment);
 
         add_comment_button.setOnClickListener(this);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -97,7 +101,18 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-
+    private void getParseusername(comment_object object , String username_objectId){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    // object will be your game score
+                } else {
+                    // something went wrong
+                }
+            }
+        });
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -137,4 +152,5 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
 }
