@@ -13,13 +13,13 @@
 
 
 
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="400dp"
-            android:id="@+id/comment_listView"
-            android:divider="@color/common_action_bar_splitter"
-            android:padding="@dimen/activity_vertical_margin">
-        </ListView>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:id="@+id/comment_listView"
+        android:divider="@color/common_action_bar_splitter"
+        android:padding="@dimen/activity_vertical_margin">
+    </ListView>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

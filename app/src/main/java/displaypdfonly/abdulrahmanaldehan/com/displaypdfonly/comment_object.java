@@ -1,5 +1,11 @@
 package displaypdfonly.abdulrahmanaldehan.com.displaypdfonly;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static java.util.Date.parse;
+
 /**
  * Created by Abdulrahman on 04-12-15.
  */
@@ -11,11 +17,23 @@ public class comment_object
     public String date;
     public String username;
 
-    public comment_object(String comment,String obj_id,String date,String username)
-    {
+    public comment_object(String comment,String obj_id,String comment_date,String username) {
         this.comment = comment;
         this.obj_id = obj_id;
-        this.date = date;
+        /**
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy, hh:mm");
+        Date newDate = null;
+        try {
+            newDate = format.parse(comment_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        format = new SimpleDateFormat("MMM dd,yyyy");
+
+         this.date = format.format(newDate);
+         */
+        this.date = comment_date;
         this.username = username;
     }
 

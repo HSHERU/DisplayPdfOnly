@@ -32,8 +32,7 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-    //ao we can get the username that wrote the comment
-    private String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +47,7 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
                 if (e == null) {
                     List<comment_object> comments_list = new ArrayList<comment_object>();
                     for (int i = 0; i < list.size(); i++) {
-                        /**
-                         * String username_objectId = (String) list.get(i).get("UserID");
-                        try {
-                            username = query.get(username_objectId).get("username").toString();
-                        } catch (ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                         */
+
                         comments_list.add(new comment_object(
                                 list.get(i).get("Comment").toString(),
                                 list.get(i).getObjectId(),
@@ -63,7 +55,6 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
                                 list.get(i).getParseObject("UserID").get("username").toString()));
                     }
                     ListView lv = (ListView) findViewById(R.id.comment_listView);
-                    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Tadabbur_page.this, android.R.layout.simple_list_item_1, comments_list);
                     comment_array_adapter array_adapter = new comment_array_adapter(Tadabbur_page.this,comments_list);
                     lv.setAdapter(array_adapter);
 
@@ -101,18 +92,7 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-    private void getParseusername(comment_object object , String username_objectId){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-        query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                if (e == null) {
-                    // object will be your game score
-                } else {
-                    // something went wrong
-                }
-            }
-        });
-    }
+
     @Override
     public void onStart() {
         super.onStart();
