@@ -16,8 +16,8 @@ public class comment_object
     public String obj_id;
     public String date;
     public String username;
-
-    public comment_object(String comment,String obj_id,String comment_date,String username) {
+    public String Ayah_number;
+    public comment_object(String comment,String obj_id,String comment_date,String username , String Ayah_number) {
         this.comment = comment;
         this.obj_id = obj_id;
         /**
@@ -33,6 +33,7 @@ public class comment_object
 
          this.date = format.format(newDate);
          */
+        this.Ayah_number = Ayah_number;
         this.date = comment_date;
         this.username = username;
     }

@@ -42,12 +42,23 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:id="@+id/comment_list_textview"
+        android:id="@+id/comment_list_textView"
         android:layout_weight="10"
         android:scaleType="fitCenter"
         android:text="Comment"
         android:textAlignment="center"
         android:textSize="10pt"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ayah_number_textView_template"
+        android:layout_weight="10"
+        android:scaleType="fitCenter"
+        android:text="Ayah_number"
+        android:textAlignment="center"
+        android:textSize="10pt"
+        android:background="@color/common_signin_btn_default_background"/>
+
 
 
 </LinearLayout>

@@ -52,7 +52,8 @@ public class Tadabbur_page extends AppCompatActivity implements View.OnClickList
                                 list.get(i).get("Comment").toString(),
                                 list.get(i).getObjectId(),
                                 list.get(i).getCreatedAt().toString(),
-                                list.get(i).getParseObject("UserID").get("username").toString()));
+                                list.get(i).getParseObject("UserID").get("username").toString(),
+                                list.get(i).get("Ayah_number").toString()));
                     }
                     ListView lv = (ListView) findViewById(R.id.comment_listView);
                     comment_array_adapter array_adapter = new comment_array_adapter(Tadabbur_page.this,comments_list);
